@@ -1,5 +1,6 @@
 import { useState } from "react";
 import MainContent from "./MainContent";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -27,15 +28,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </button>
       </div>
       <nav className="mt-6">
-        <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-700">
-          Home
-        </a>
-        <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-700">
-          Profile
-        </a>
-        <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-700">
-          Settings
-        </a>
+        <Link className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-700" to="">Approve User</Link> 
+        <Link className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-700" to="payment">All Payment</Link>
       </nav>
     </div>
   );

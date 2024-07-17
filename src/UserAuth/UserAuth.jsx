@@ -1,5 +1,5 @@
 import axios from "axios"
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 
 export const userContext = createContext(null)
 
@@ -8,12 +8,14 @@ export const userContext = createContext(null)
     const [users, setUsers] = useState(false)
     const token = localStorage.getItem("token");
     // console.log(token)
-    axios.post("http://localhost:5000/verifyToken", {token})
+    useEffect(()=>{
+      axios.post("http://localhost:5000/verifyToken", {token})
     .then((res)=> {
         setUsers(res.data)
         setLoading(false)
     })
     .catch((err)=> console.log(err))
+    }, [])
     console.log(users, loading)
     const info = {loading, setUsers, users, setLoading}
   return (
