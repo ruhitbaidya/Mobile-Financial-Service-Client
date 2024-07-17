@@ -1,0 +1,10 @@
+.register-bg{
+    background-image: url('../../../public/login.jpg');
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.reg-bg{
+    background-color: rgba(32, 37, 37, 0.582);
+    border-radius:15px;
+}

@@ -4,6 +4,7 @@ import axios from "axios"
 import "./Style.css";
 import { useContext } from "react";
 import { userContext } from "../../UserAuth/UserAuth";
+import createToken from "../../Hooks/CreateJwt";
 const Register = () => {
     const {name} = useContext(userContext)
     console.log(name)
@@ -15,7 +16,6 @@ const Register = () => {
     const phone = event.phone.value;
     const pin = event.pin.value;
     const status = "pending"
-
     if ((name === "", email === "")) {
       return toast.error("Must Fillup Name And Email");
     }
@@ -32,6 +32,7 @@ const Register = () => {
             axios.post("http://localhost:5000/register", user)
             .then((res)=>{
                 if(res.data.insertedId){
+                    createToken({email, phone})
                     toast.success("Successfully Register")
                     event.reset()
                 }
@@ -100,7 +101,7 @@ const Register = () => {
                 </button>
               </div>
             </div>
-            <div className="mt-[20px]">
+            <div className="mt-[20px] text-white">
               <p>
                 If You have Already An Account Please{" "}
                 <Link to="/login">Login</Link>{" "}
