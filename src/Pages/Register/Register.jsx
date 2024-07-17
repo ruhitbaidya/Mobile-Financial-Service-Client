@@ -1,13 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios"
 import "./Style.css";
-import { useContext } from "react";
-import { userContext } from "../../UserAuth/UserAuth";
 import createToken from "../../Hooks/CreateJwt";
 const Register = () => {
-    const {name} = useContext(userContext)
-    console.log(name)
+  const navigate = useNavigate()
   const handelSubmit = async (e) => {
     e.preventDefault();
     const event = e.target;
@@ -35,6 +32,7 @@ const Register = () => {
                     createToken({email, phone})
                     toast.success("Successfully Register")
                     event.reset()
+                    navigate("/dashboard")
                 }
             })
             .catch((err)=> {

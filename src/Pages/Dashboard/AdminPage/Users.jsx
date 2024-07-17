@@ -1,17 +1,27 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Users = ({ data }) => {
-    const token = localStorage.getItem("token")
-    console.log(data)
-  const handelAprove = (e)=>{
-        console.log(e.target.value)
-        // axios.post(`http://localhost:5000/changeRole/${e.target.value}`, {token})
-        // .then((res)=> console.log(res))
-        // .catch((err)=> console.log(err))
+  const [roleManage, SetRoleManage] = useState("");
+  const [idManage, SetidManage] = useState("");
+  const token = localStorage.getItem("token");
+  console.log(data);
+  const controlRole = (text) => {
+    SetRoleManage(text);
+  };
+  const handelAprove = (id) => {
+    SetidManage(id);
+  };
+  useEffect(() => {
+    axios
+      .post(`http://localhost:5000/changeRole/${idManage}/${roleManage}`, { token })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }, [idManage, roleManage, token]);
+  console.log(roleManage, idManage);
+  if (data.status === false || data.length === 0) {
+    return <p>Loading.....</p>;
   }
-if(data.status === false || data.length === 0){
-    return <p>Loading.....</p>
-}
   return (
     <div>
       <div>
@@ -23,26 +33,38 @@ if(data.status === false || data.length === 0){
                 <th></th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {data ? data?.map((item) => (
-                <tr key={item._id}>
-                  <th></th>
-                  <th>{item.name}</th>
-                  <th>{item.email || item.phone}</th>
-                  <th>
-                    <select onChange={()=> handelAprove(item._id)} className="select select-bordered w-full max-w-xs">
-                      <option disabled selected>
-                        --Select--
-                      </option>
-                      <option value="agent">Agent</option>
-                      <option value="user">User</option>
-                    </select>
-                  </th>
-                </tr>
-              )) : <p>Loading.....</p>}
+              {data ? (
+                data?.map((item) => (
+                  <tr key={item._id}>
+                    <th></th>
+                    <th>{item.name}</th>
+                    <th>{item.email || item.phone}</th>
+                    <th>{item.status}</th>
+                    <th>
+                      <select
+                        onChange={(e) => {
+                          handelAprove(item._id);
+                          controlRole(e.target.value);
+                        }}
+                        className="select select-bordered w-full max-w-xs"
+                      >
+                        <option disabled selected>
+                          --Select--
+                        </option>
+                        <option value="agent">Agent</option>
+                        <option value="user">User</option>
+                      </select>
+                    </th>
+                  </tr>
+                ))
+              ) : (
+                <p>Loading.....</p>
+              )}
             </tbody>
           </table>
         </div>
