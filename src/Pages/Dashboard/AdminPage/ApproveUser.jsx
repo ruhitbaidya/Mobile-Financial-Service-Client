@@ -5,11 +5,17 @@ import "react-tabs/style/react-tabs.css";
 import Users from "./Users";
 
 const ApproveUser = () => {
+    const [pandiUser, setPandiUser] = useState([])
     const [apUser, setApUser] = useState([])
     const token = localStorage.getItem("token")
   useEffect(() => {
     axios
       .post("http://localhost:5000/alluserPending",{token})
+      .then((res) => setPandiUser(res.data))
+      .catch((err) => console.log(err));
+
+      axios
+      .post("http://localhost:5000/allAproveUser",{token})
       .then((res) => setApUser(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -24,7 +30,7 @@ const ApproveUser = () => {
             </TabList>
 
             <TabPanel>
-              <Users data={apUser}></Users>
+              <Users data={pandiUser}></Users>
             </TabPanel>
             <TabPanel>
               <Users data={apUser}></Users>

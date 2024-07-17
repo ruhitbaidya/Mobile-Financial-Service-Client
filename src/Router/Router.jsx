@@ -23,11 +23,15 @@ const router = createBrowserRouter([
     children : [
       {
         path : "",
-        element : <ApproveUser></ApproveUser>
+        element : <PrivateRouter>
+          <ApproveUser></ApproveUser>
+        </PrivateRouter>
       },
       {
         path : "payment",
-        element : <AllPayment></AllPayment>
+        element : <PrivateRouter>
+          <AllPayment></AllPayment>
+        </PrivateRouter>
       }
     ]
   }
